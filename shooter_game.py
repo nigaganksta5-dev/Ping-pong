@@ -55,6 +55,9 @@ bread = Gamesprite('bread.png', 400,200,0,50,50)
 player_l = Player('Hero.png.png', 0,200, 10,80,50)
 player_r = Player('Hero2.png', 720,200, 10, 80, 50)
 
+speed_x = 5
+speed_y = 5
+
 clock = time.Clock()
 FPS = 60
 speed = 10
@@ -65,6 +68,7 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+    
         
                         
     if finish != True:
@@ -73,7 +77,10 @@ while game:
         player_l.reset()
         player_r.update_r()
         player_r.reset()
+        bread.rect.x += speed_x
+        bread.rect.y     += speed_y
         bread.reset()
+
 
     display.update()
     clock.tick(FPS)
