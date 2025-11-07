@@ -78,8 +78,13 @@ while game:
         player_r.update_r()
         player_r.reset()
         bread.rect.x += speed_x
-        bread.rect.y     += speed_y
+        bread.rect.y += speed_y
         bread.reset()
+        if bread.rect.y > 350 or bread.rect.y < 0:
+            speed_y *= -1
+        if sprite.collide_rect(player_l,bread) or sprite.collide_rect(player_r,bread):
+            speed_x *= -1
+
 
 
     display.update()
