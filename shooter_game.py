@@ -1,3 +1,4 @@
+
 #Создай собственный Шутер!
 from pygame import *
 from random import * 
@@ -10,9 +11,9 @@ mixer.init()
 # mixer.music.set_volume(0.3)
 # shoot = mixer.Sound('fire.ogg')
 #создай окно игры
-window = display.set_mode((500,900))
-display.set_caption('Шутер')
-background = transform.scale(image.load('phon.jpg'),(500,900))
+window = display.set_mode((800,400))
+display.set_caption('Пинг-понг')
+background = transform.scale(image.load('phon.jpg'),(800,400))
 y1 = 350
 y2 = 350
 x1 = 100
@@ -36,18 +37,23 @@ class Gamesprite(sprite.Sprite):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
 class Player(Gamesprite):
-    def update(self):
+    def update_l(self):
         keys_pressed = key.get_pressed()
-        if keys_pressed[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_d] and self.rect.x < 420:
-            self.rect.x += self.speed
-    
-    
-player = Player('Hero.png.png', 250,850, 10,80,50)
+        if keys_pressed[K_w] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys_pressed[K_s] and self.rect.y < 350:
+            self.rect.y += self.speed
+    def update_r(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys_pressed[K_DOWN] and self.rect.y < 350:
+            self.rect.y += self.speed
 
-num_fire = 0
-rel_time = False
+    
+bread = Gamesprite('bread.png', 400,200,0,50,50)  
+player_l = Player('Hero.png.png', 0,200, 10,80,50)
+player_r = Player('Hero2.png', 720,200, 10, 80, 50)
 
 clock = time.Clock()
 FPS = 60
@@ -59,21 +65,15 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
-        elif e.type == KEYDOWN:
-            if e.key == K_SPACE:
-                if num_fire <= 5 and rel_time == False:
-                    player.fire()
-                    shoot.play() 
-                    num_fire += 1
-                if num_fire > 5 and rel_time == False:
-                    rel_time = True
-                    start = tm()
+        
                         
     if finish != True:
         window.blit(background,(0,0))
-        player.update()
-        player.reset()
-        
+        player_l.update_l()
+        player_l.reset()
+        player_r.update_r()
+        player_r.reset()
+        bread.reset()
 
     display.update()
     clock.tick(FPS)
