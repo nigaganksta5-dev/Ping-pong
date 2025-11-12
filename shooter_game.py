@@ -19,8 +19,8 @@ y2 = 350
 x1 = 100
 x2 = 300
 font0 = font.SysFont('Arial', 40)
-win = font0.render('Ты убил всех хлебом', True, (255,215, 0))
-loss = font0.render('Ты потратил слишком много хлеба', True,(255,215,0))
+loss_r = font0.render('Проиграл игрок справа', True, (255,215, 0))
+loss_l = font0.render('Проиграл игрок слева', True,(255,215,0))
 font1 = font.SysFont('Arial',20)
 points = 0
 loser = 0
@@ -84,7 +84,13 @@ while game:
             speed_y *= -1
         if sprite.collide_rect(player_l,bread) or sprite.collide_rect(player_r,bread):
             speed_x *= -1
-
+        if bread.rect.x < -50:
+            window.blit(loss_l, (0,150))
+            finish = True
+        if bread.rect.x > 800:
+            window.blit(loss_r, (350,150))
+            finish = True
+        
 
 
     display.update()
